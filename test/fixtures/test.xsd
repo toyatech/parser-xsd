@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3c.org/2001/XMLSchema">
+  <xsd:annotation>
+    <xsd:documentation> This is the XML Schema driver for SCXML 1.0. Please use this namespace for SCXML 1.0 elements: "http://www.w3.org/2005/07/scxml" </xsd:documentation>
+    <xsd:documentation source="scxml-copyright.xsd"/>
+  </xsd:annotation>
+</xsd:schema>

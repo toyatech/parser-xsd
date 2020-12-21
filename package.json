@@ -1,0 +1,22 @@
+{
+  "name": "xsd-parser",
+  "version": "0.0.0",
+  "description": "An XSD parser for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive './test/**/*.js' --require esm"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "min-dash": "^3.5.2",
+    "sax": "^1.2.4",
+    "tiny-stack": "^2.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "esm": "^3.2.25",
+    "mocha": "^8.2.1"
+  }
+}

@@ -1,0 +1,360 @@
+'use strict';
+
+import { expect } from 'chai';
+import { readFileSync } from 'fs';
+
+const parseFile = require('../..');
+
+const parserOptions = {
+  clean: true,
+  prefixNamespaces: {
+    'scxml-strict.xsd': 'scxml'
+  }
+};
+
+function readFile(path) {
+  return readFileSync(path, 'utf8');
+}
+
+
+describe('SCXML', function() {
+
+  this.timeout(10000);
+
+
+  describe('SCXML', function() {
+
+    it('include', async function() {
+
+      // given
+      const file = readFile('test/fixtures/xsd/scxml-strict.xsd');
+
+      // when
+      const { elementsByType } = await parseFile(file, parserOptions);
+
+      // then
+      const inc = elementsByType[ 'xsd:include' ][ 0 ];
+
+      expect(inc.schemaLocation).to.equal('scxml-core-strict.xsd');
+    });
+
+
+//     it('bpmn:SubProcess', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMN20.cmof');
+
+//       const expected = {
+//         name: 'SubProcess',
+//         superClass: [
+//           'Activity',
+//           'FlowElementsContainer'
+//         ],
+//         properties: [
+//           {
+//             name: 'triggeredByEvent',
+//             isAttr: true,
+//             default: false,
+//             type: 'Boolean'
+//           }, {
+//             name: 'artifacts',
+//             type: 'Artifact',
+//             isMany: true
+//           }
+//         ]
+//       };
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const subProcess = elementsById[ 'SubProcess' ];
+
+//       expect(subProcess).to.deep.eql(expected);
+//     });
+
+
+//     it('bpmn:ChoreographyLoopType (literal values)', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMN20.cmof');
+
+//       const expected = {
+//         name: 'ChoreographyLoopType',
+//         literalValues: [
+//           {
+//             name: 'None'
+//           }, {
+//             name: 'Standard'
+//           }, {
+//             name: 'MultiInstanceSequential'
+//           }, {
+//             name: 'MultiInstanceParallel'
+//           }
+//         ]
+//       };
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const loopType = elementsById[ 'ChoreographyLoopType' ];
+
+//       expect(loopType).to.deep.eql(expected);
+//     });
+
+
+//     it('bpmn:SequenceFlow (complex-attr-reference)', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMN20.cmof');
+
+//       const expected = {
+//         name: 'SequenceFlow',
+//         superClass: [ 'FlowElement' ],
+//         properties: [
+//           {
+//             name: 'isImmediate',
+//             isAttr: true,
+//             type: 'Boolean'
+//           }, {
+//             name: 'conditionExpression',
+//             type: 'Expression',
+//           }, {
+//             name: 'sourceRef',
+//             type: 'FlowNode',
+//             isAttr: true,
+//             isReference: true
+//           }, {
+//             name: 'targetRef',
+//             type: 'FlowNode',
+//             isAttr: true,
+//             isReference: true
+//           }
+//         ]
+//       };
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const sequenceFlow = elementsById[ 'SequenceFlow' ];
+
+//       expect(sequenceFlow).to.deep.eql(expected);
+//     });
+
+
+//     it('bpmn:FlowElement (complex-contain-reference)', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMN20.cmof');
+
+//       const expected = {
+//         name: 'FlowNode',
+//         isAbstract: true,
+//         superClass: [ 'FlowElement' ],
+//         properties: [
+//           {
+//             name: 'outgoing',
+//             type: 'SequenceFlow',
+//             isMany: true,
+//             isReference: true
+//           }, {
+//             name: 'incoming',
+//             type: 'SequenceFlow',
+//             isMany: true,
+//             isReference: true
+//           }, {
+//             name: 'lanes',
+//             type: 'Lane',
+//             isVirtual: true,
+//             isMany: true,
+//             isReference: true
+//           }
+//         ]
+//       };
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const flowNode = elementsById[ 'FlowNode' ];
+
+//       expect(flowNode).to.deep.eql(expected);
+//     });
+
+
+//     it('should add xmi:type=Association to associations', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMN20.cmof');
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const shape = elementsById[ 'A_errorRefs_operation' ];
+
+//       expect(shape).to.exist;
+//     });
+
+
+//     it('should add xmi:type=Class to types', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMN20.cmof');
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const shape = elementsById[ 'Interface' ];
+
+//       expect(shape).to.exist;
+//     });
+
+
+//     it('should add xmi:type=Enumeration to enumerations', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMN20.cmof');
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const shape = elementsById[ 'ItemKind' ];
+
+//       expect(shape).to.exist;
+//     });
+
+//   });
+
+
+//   describe('BPMNDI', function() {
+
+//     it('bpmndi:BPMNShape (complex-contain-reference)', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/BPMNDI.cmof');
+
+//       const expected = {
+//         name: 'BPMNShape',
+//         superClass: [ 'di:LabeledShape' ],
+//         properties: [
+//           {
+//             name: 'bpmnElement',
+//             isAttr: true,
+//             isReference: true,
+//             type: 'bpmn:BaseElement',
+//             redefines: 'di:DiagramElement#modelElement'
+//           }, {
+//             name: 'isHorizontal',
+//             isAttr: true,
+//             type: 'Boolean'
+//           }, {
+//             name: 'isExpanded',
+//             isAttr: true,
+//             type: 'Boolean'
+//           }, {
+//             name: 'isMarkerVisible',
+//             isAttr: true,
+//             type: 'Boolean'
+//           }, {
+//             name: 'label',
+//             type: 'BPMNLabel'
+//           }, {
+//             name: 'isMessageVisible',
+//             isAttr: true,
+//             type: 'Boolean'
+//           }, {
+//             name: 'participantBandKind',
+//             type: 'ParticipantBandKind',
+//             isAttr: true
+//           },
+//           {
+//             name: 'choreographyActivityShape',
+//             type: 'BPMNShape',
+//             isAttr: true,
+//             isReference: true
+//           }
+//         ]
+//       };
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const bpmnShape = elementsById[ 'BPMNShape' ];
+
+//       expect(bpmnShape).to.deep.eql(expected);
+//     });
+
+//   });
+
+
+//   describe('DI', function() {
+
+//     it('di:Shape (complex-non-attr-type)', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/DI.cmof');
+
+//       const expected = {
+//         name: 'Shape',
+//         isAbstract: true,
+//         superClass: [ 'Node' ],
+//         properties: [
+//           {
+//             name: 'bounds',
+//             type: 'dc:Bounds'
+//           }
+//         ]
+//       };
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const shape = elementsById[ 'Shape' ];
+
+//       expect(shape).to.deep.eql(expected);
+//     });
+
+//   });
+
+
+//   describe('DC', function() {
+
+//     it('should add xmi:type=DataType to types', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/DC.cmof');
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const shape = elementsById[ 'Point' ];
+
+//       expect(shape).to.exist;
+//     });
+
+
+//     it('should add xmi:type=PrimitiveType to types', async function() {
+
+//       // given
+//       const file = readFile('test/fixtures/cmof/DC.cmof');
+
+//       // when
+//       const { elementsById } = await parseFile(file, parserOptions);
+
+//       // then
+//       const shape = elementsById[ 'Font' ];
+
+//       expect(shape).to.exist;
+//     });
+
+  });
+
+});

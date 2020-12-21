@@ -1,0 +1,1 @@
+export { parseFile as default } from './lib/parseFile';
